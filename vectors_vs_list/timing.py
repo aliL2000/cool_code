@@ -1,11 +1,11 @@
 import time
 
-tic = time.perf_counter()
-print(tic)
+#Start timing
+start = time.perf_counter()
 #perform any calculation
 sum = 0
 for i in range(1000000):
     sum+=i
 #Re-run timing
-toc = time.perf_counter()
-print(f"Performed calculation in {toc - tic:0.4f} seconds")
+end = time.perf_counter()
+print(f"Performed calculation in {end - start:0.4f} seconds")
