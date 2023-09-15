@@ -1,15 +1,26 @@
 import time
 
 def create_and_update_list():
-    
-def create_and_update_vector():
+    return 0
 
+def create_and_update_vector():
+    return 0
 
 #Start timing
-start = time.perf_counter()
+startlist = time.perf_counter()
+
 #perform any calculation
 
 #Re-run timing
-end = time.perf_counter()
-print(f"Performed calculation in {end - start:0.4f} seconds")
+endlist = time.perf_counter()
+
+#Start timing
+startvector = time.perf_counter()
+
+#perform any calculation
+
+#Re-run timing
+endvector = time.perf_counter()
+print(f"Performed calculation in {endlist - startlist:0.4f} seconds")
+print(f"Performed calculation in {endvector - startvector:0.4f} seconds")
 
