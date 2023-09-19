@@ -31,3 +31,4 @@ create_and_update_list()
 endvector = time.perf_counter()
 print(f"Performed list calculation in {endlist - startlist:0.10f} seconds")
 print(f"Performed vector calculation in {endvector - startvector:0.10f} seconds")
+
