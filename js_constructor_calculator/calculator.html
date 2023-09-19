@@ -1,18 +1,15 @@
-
 <div>
   <label for="inputNumber">Enter a number:</label>
-  <input type="number" id="inputNumber" placeholder="Enter a number">
+  <input type="number" id="inputNumber" placeholder="Enter a number" />
   <button id="calculateButton">Calculate</button>
 </div>
-<div id="result">
-  Result: <span id="output">0</span>
-</div>
+<div id="result">Result: <span id="output">0</span></div>
 
 <script>
   // Function to perform the custom calculation
-  function calculate_cost(square_footage,tier_list){
-    return square_footage*tier_list;
-}
+  function calculate_cost(square_footage, tier_list) {
+    return square_footage * tier_list;
+  }
 
   // Function to update the result
   function updateResult() {
@@ -20,11 +17,13 @@
     const outputElement = document.getElementById("output");
 
     const inputValue = parseFloat(inputElement.value);
-    const result = calculate_cost(inputValue,1);
+    const result = calculate_cost(inputValue, 1);
 
     outputElement.textContent = result;
   }
 
   // Event listener for the Calculate button
-  document.getElementById("calculateButton").addEventListener("click", updateResult);
+  document
+    .getElementById("calculateButton")
+    .addEventListener("click", updateResult);
 </script>
