@@ -1,17 +1,22 @@
-<div>
-  <label for="inputNumber">Enter a number:</label>
+<div id="step1">
+  <label for="inputNumber">Step 1: Enter a number:</label>
   <input type="number" id="inputNumber" placeholder="Enter a number">
+  <button id="nextStep1">Next</button>
 </div>
-<div>
-  <fieldset>
-    <legend>Quality Level:</legend>
-    <input type="radio" id="level1" name="qualityLevel" value="1"> <label for="level1">Low</label>
-    <input type="radio" id="level2" name="qualityLevel" value="2"> <label for="level2">Medium</label>
-    <input type="radio" id="level3" name="qualityLevel" value="3"> <label for="level3">High</label>
-  </fieldset>
+
+<div id="step2" style="display: none;">
+  <label>Step 2: Select Quality Level:</label>
+  <input type="radio" id="level1" name="qualityLevel" value="1"> <label for="level1">Low</label>
+  <input type="radio" id="level2" name="qualityLevel" value="2"> <label for="level2">Medium</label>
+  <input type="radio" id="level3" name="qualityLevel" value="3"> <label for="level3">High</label>
+  <button id="nextStep2">Next</button>
 </div>
-<button id="calculateButton">Calculate</button>
-<div id="result" hidden = "true">
+
+<div id="step3" style="display: none;">
+  <button id="calculateButton">Calculate</button>
+</div>
+
+<div id="result" style="display: none;">
   Result: <span id="output">0</span>
 </div>
 
@@ -20,12 +25,14 @@
   function customCalculation(inputValue, qualityLevel) {
     // Replace this with your own calculation logic
     let result = inputValue * 2; // This is just a sample calculation
+
     // Adjust result based on quality level
     if (qualityLevel === 2) {
       result *= 1.5; // Modify result for medium quality
     } else if (qualityLevel === 3) {
       result *= 2; // Modify result for high quality
     }
+
     return result;
   }
 
@@ -34,7 +41,6 @@
     const inputElement = document.getElementById("inputNumber");
     const qualityLevelElements = document.querySelectorAll('input[name="qualityLevel"]:checked');
     const outputElement = document.getElementById("output");
-    const outputDiv = document.getElementById("result")
 
     const inputValue = parseFloat(inputElement.value);
     let qualityLevel = 1; // Default to low quality if no radio button is checked
@@ -43,12 +49,22 @@
       // Get the selected quality level (radio button value)
       qualityLevel = parseFloat(qualityLevelElements[0].value);
     }
+
     const result = customCalculation(inputValue, qualityLevel);
 
-    outputDiv.hidden=false;
     outputElement.textContent = result;
+    document.getElementById("result").style.display = "block";
   }
 
-  // Event listener for the Calculate button
+  // Event listener for Next buttons
+  document.getElementById("nextStep1").addEventListener("click", function () {
+    document.getElementById("step2").style.display = "block";
+  });
+
+  document.getElementById("nextStep2").addEventListener("click", function () {
+    document.getElementById("step3").style.display = "block";
+  });
+
+  // Event listener for Calculate button
   document.getElementById("calculateButton").addEventListener("click", updateResult);
 </script>
