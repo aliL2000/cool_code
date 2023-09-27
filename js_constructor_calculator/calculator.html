@@ -7,13 +7,16 @@
     <form id="selectionForm">
       <h2>Select Your Preferences:</h2>
       <label>
-        <input type="checkbox" name="option1" value="laundry" /> Laundry Appliances
+        <input type="checkbox" name="option1" value="laundry" /> Laundry
+        Appliances
       </label>
       <label>
-        <input type="checkbox" name="option2" value="heatingAndCooling" /> Heating and Cooling
+        <input type="checkbox" name="option2" value="heatingAndCooling" />
+        Heating and Cooling
       </label>
       <label>
-        <input type="checkbox" name="option2" value="kitchenAppliance" /> Kitchen Appliances
+        <input type="checkbox" name="option2" value="kitchenAppliance" />
+        Kitchen Appliances
       </label>
       <br />
       <input type="submit" value="Submit" />
@@ -23,7 +26,9 @@
     //DETERMINE WHICH OPTIONS THE USER SELECTED
     function determineSelection() {
       //Get all the checkboxes
-      const checkboxes = document.querySelectorAll('input[type="checkbox"][name^="option"]');
+      const checkboxes = document.querySelectorAll(
+        'input[type="checkbox"][name^="option"]'
+      );
       const selectedOptions = [];
       checkboxes.forEach(function (checkbox) {
         if (checkbox.checked) {
@@ -35,7 +40,25 @@
 
     //ITERATE THROUGH ALL THE OPTIONS SELECTED
     function iterateSelection(options) {
-      options.forEach
+      options.forEach((option) => {
+        determineCalculator(option);
+      });
+    }
+
+    //START GOING THROUGH AND DETERMINING 
+    function determineCalculator(option) {
+      console.log(option);
+      switch(option) {
+        case "laundry":
+          console.log("hi");
+          break;
+        case "heatingAndCooling":
+          console.log("hey");
+          break;
+        case "kitchenAppliance":
+          console.log("hellooo");
+          break;
+      }
     }
 
     //FLOW OF THE SITE
@@ -43,7 +66,7 @@
     selectionForm.addEventListener("submit", function (event) {
       // Prevent the form from actually submitting to a server
       event.preventDefault();
-      
+
       var chosenOptions = determineSelection();
       iterateSelection(chosenOptions);
     });
