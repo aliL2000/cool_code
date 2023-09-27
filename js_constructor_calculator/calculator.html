@@ -40,24 +40,36 @@
 
     //ITERATE THROUGH ALL THE OPTIONS SELECTED
     function iterateSelection(options) {
+      let prices = {};
       options.forEach((option) => {
-        determineCalculator(option);
+        prices[option] = determineCalculator(option);
       });
+      return prices;
     }
 
-    //START GOING THROUGH AND DETERMINING 
+    //START GOING THROUGH AND DETERMINING WHICH CALCULATORS TO CALL
     function determineCalculator(option) {
       console.log(option);
-      switch(option) {
+      switch (option) {
         case "laundry":
-          console.log("hi");
+          return [10, 20];
           break;
         case "heatingAndCooling":
-          console.log("hey");
+          return [30, 40];
           break;
         case "kitchenAppliance":
-          console.log("hellooo");
+          return [50, 60];
           break;
+      }
+    }
+
+    //RENDER THE CALCULATOR
+
+    //RENDER THE PRICES ONTO HTML AND SPLIT
+    function renderPrices(prices) {
+      for (var key in prices) {
+        var value = prices[key];
+        console.log(value);
       }
     }
 
@@ -67,8 +79,9 @@
       // Prevent the form from actually submitting to a server
       event.preventDefault();
 
-      var chosenOptions = determineSelection();
-      iterateSelection(chosenOptions);
+      let chosenOptions = determineSelection();
+      let prices = iterateSelection(chosenOptions);
+      renderPrices(prices);
     });
   </script>
 </html>
