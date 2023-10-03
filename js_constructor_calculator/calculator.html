@@ -40,40 +40,40 @@
       return selectedOptions;
     }
 
-    //ITERATE THROUGH ALL THE OPTIONS SELECTED
-    function iterateSelection(options) {
-      let prices = {};
-      options.forEach((option) => {
-        prices[option] = determineCalculator(option);
+    function renderLaundryOptions() {
+      const radioOptions = [
+        { label: "Front Load", value: "frontload" },
+        { label: "Top Load", value: "topload" },
+        { label: "Stackable", value: "stackable" },
+      ];
+
+      const form = document.createElement("form");
+
+      const title = document.createElement("h2");
+      title.textContent = "Laundry Appliances";
+      form.appendChild(title);
+      form.id = "selectionForm";
+
+      radioOptions.forEach((option, index) => {
+        const label = document.createElement("label");
+
+        const radio = document.createElement("input");
+        radio.type = "radio"; // Set the same name for all radio buttons in the form
+        radio.value = option.value;
+
+        const text = document.createTextNode(option.label);
+
+        label.appendChild(radio);
+        label.appendChild(text);
+        form.appendChild(label);
       });
-      return prices;
-    }
 
-    //START GOING THROUGH AND DETERMINING WHICH CALCULATORS TO CALL
-    function determineCalculator(option) {
-      removeID("selectionForm");
-      switch (option) {
-        case "laundry":
-          return [10, 20];
-          break;
-        case "heatingAndCooling":
-          return [30, 40];
-          break;
-        case "kitchenAppliance":
-          return [50, 60];
-          break;
-      }
-    }
+      const submitButton = document.createElement("input");
+      submitButton.type = "submit";
+      submitButton.value = "Submit";
+      form.appendChild(submitButton);
 
-    //REFRESH THE WINDOW FOR EACH CALCULATOR
-    function removeID(_id) {
-      let object = document.getElementById(_id);
-      if (object !== null) object.remove();
-    }
-    //EACH CALCULATOR MUST RENDER AND CALCULATE AND DISPLAY THE OPTIONS TO THE USER
-    //This function will render and
-    function calculateLaundryOptions(laundryOptions) {
-      return;
+      document.getElementById("selection-screen").appendChild(form);
     }
 
     //RENDER THE PRICES ONTO HTML AND SPLIT
@@ -149,13 +149,50 @@
       });
     }
 
+    async function iterateSelection(options) {
+      let prices = {};
+      await Promise.all(
+        options.map(async (option) => {
+          prices[option] = await determineCalculator(option);
+        })
+      );
+      return prices;
+    }
+
+    //START GOING THROUGH AND DETERMINING WHICH CALCULATORS TO CALL
+    function determineCalculator(option) {
+      removeID("selectionForm");
+      switch (option) {
+        case "laundry":
+          renderLaundryOptions();
+          console.log(getUserSelectedWork());
+          return [10, 20];
+          break;
+        case "heatingAndCooling":
+          return [30, 40];
+          break;
+        case "kitchenAppliance":
+          return [50, 60];
+          break;
+      }
+    }
+
     // Use async/await to wait for the promise to resolve
     async function main() {
       let workComponent = await getUserSelectedWork();
       console.log(workComponent);
+      let prices = await iterateSelection(workComponent);
+      console.log(prices);
     }
 
     main(); // Call the main function to start the process
     //Create a function that accepts the prices and mails us the info we need.
+
+    //UTIL FUNCTIONS
+    //REFRESH THE WINDOW FOR EACH CALCULATOR
+    function removeID(_id) {
+      let object = document.getElementById(_id);
+      if (object !== null) object.remove();
+    }
   </script>
 </html>
