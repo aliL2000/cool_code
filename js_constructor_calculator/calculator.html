@@ -54,9 +54,6 @@
       removeID("selectionForm");
       switch (option) {
         case "laundry":
-          let laundryOptions = renderLaundry();
-          console.log(laundryOptions);
-          //return calculateLaundryOptions(laundryOptions);
           return [10,20];
           break;
         case "heatingAndCooling":
@@ -74,37 +71,6 @@
       if (object !== null) object.remove();
     }
     //EACH CALCULATOR MUST RENDER AND CALCULATE AND DISPLAY THE OPTIONS TO THE USER
-    function renderLaundry() {
-      const washingMachineOptions = ["Washer 1", "Washer 2", "Washer 3"];
-      const dryerOptions = ["Dryer 1", "Dryer 2", "Dryer 3"];
-      const form = document.createElement("form");
-      form.id = "laundry";
-      let laundryChoices = [];
-
-      createRadioButtons(form, washingMachineOptions, "washingMachine");
-      createRadioButtons(form, dryerOptions, "dryer");
-
-      // Create a submit button
-      const submitButton = document.createElement("input");
-      submitButton.type = "submit";
-      submitButton.value = "Submit";
-      form.appendChild(submitButton);
-      // Add an event listener to the form to handle submission
-      form.addEventListener("submit", function (event) {
-        event.preventDefault();
-        const selectedWashingMachineOption = document.querySelector('input[name="washingMachine"]:checked');
-        const selectedDryerOption = document.querySelector('input[name="dryer"]:checked' );
-        if (selectedWashingMachineOption) {
-          laundryChoices.push('${selectedWashingMachineOption.value}');
-        }
-        if (selectedDryerOption) {
-          laundryChoices.push(` ${selectedDryerOption.value}`);
-        }
-      });
-      const formContainer = document.getElementById("selection-screen");
-      formContainer.appendChild(form);
-      return laundryChoices;
-    }
     //This function will render and
     function calculateLaundryOptions(laundryOptions) {
       return;
@@ -185,27 +151,5 @@
       //Createa function that accepts the prices and mails us the info we need.
     });
 
-    function createRadioButtons(form, options, name) {
-      options.forEach((optionText, index) => {
-        // Create a radio button
-        const radio = document.createElement("input");
-        radio.type = "radio";
-        radio.name = name;
-        radio.value = optionText;
-        radio.id = `${name}${index + 1}`; // Unique ID for each radio button
-
-        // Create a label for the radio button
-        const label = document.createElement("label");
-        label.textContent = optionText;
-        label.htmlFor = `${name}${index + 1}`;
-
-        // Append the radio button and label to the form
-        form.appendChild(radio);
-        form.appendChild(label);
-
-        // Add a line break for better spacing
-        form.appendChild(document.createElement("br"));
-      });
-    }
   </script>
 </html>
