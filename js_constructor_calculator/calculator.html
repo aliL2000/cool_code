@@ -26,6 +26,18 @@
   </body>
   <script>
     //DETERMINE WHICH OPTIONS THE USER SELECTED
+    function getUserSelectedWork() {
+      return new Promise((resolve) => {
+        const selectionForm = document.getElementById("selectionForm");
+        let chosenOptions;
+        selectionForm.addEventListener("submit", function (event) {
+          event.preventDefault();
+          chosenOptions = determineSelection();
+          resolve(chosenOptions);
+        });
+      });
+    }
+
     function determineSelection() {
       //Get all the checkboxes
       const checkboxes = document.querySelectorAll(
@@ -52,7 +64,7 @@
       const title = document.createElement("h2");
       title.textContent = "Laundry Appliances";
       form.appendChild(title);
-      form.id = "selectionForm";
+      form.id = "laundryForm";
 
       radioOptions.forEach((option, index) => {
         const label = document.createElement("label");
@@ -74,6 +86,31 @@
       form.appendChild(submitButton);
 
       document.getElementById("selection-screen").appendChild(form);
+    }
+
+    async function getLaundrySelectedOptions() {
+      const prices = {
+        frontload: 950,
+        topload: 800,
+        stackable: 1600,
+      };
+      return new Promise((resolve) => {
+        const selectionForm = document.getElementById("laundryForm");
+        selectionForm.addEventListener("submit", function (event) {
+          event.preventDefault();
+          const selectedOption = selectionForm.querySelector(
+            'input[type="radio"]:checked'
+          );
+          if (selectedOption) {
+            resolve({
+              selectedOption: selectedOption.value,
+              value: prices[selectedOption.value],
+            });
+          } else {
+            resolve("No option selected");
+          }
+        });
+      });
     }
 
     //RENDER THE PRICES ONTO HTML AND SPLIT
@@ -137,18 +174,6 @@
       document.body.appendChild(table);
     }
 
-    function getUserSelectedWork() {
-      return new Promise((resolve) => {
-        const selectionForm = document.getElementById("selectionForm");
-        let chosenOptions;
-        selectionForm.addEventListener("submit", function (event) {
-          event.preventDefault();
-          chosenOptions = determineSelection();
-          resolve(chosenOptions);
-        });
-      });
-    }
-
     async function iterateSelection(options) {
       let prices = {};
       await Promise.all(
@@ -165,7 +190,11 @@
       switch (option) {
         case "laundry":
           renderLaundryOptions();
-          console.log(getUserSelectedWork());
+          return new Promise(async (resolve) => {
+            const selectedOption = await getLaundrySelectedOptions();
+            console.log(selectedOption);
+            resolve([10, 20]);
+          });
           return [10, 20];
           break;
         case "heatingAndCooling":
