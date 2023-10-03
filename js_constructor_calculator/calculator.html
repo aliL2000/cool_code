@@ -54,7 +54,7 @@
       removeID("selectionForm");
       switch (option) {
         case "laundry":
-          return [10,20];
+          return [10, 20];
           break;
         case "heatingAndCooling":
           return [30, 40];
@@ -137,19 +137,25 @@
       document.body.appendChild(table);
     }
 
-    //FLOW OF THE SITE
-    const selectionForm = document.getElementById("selectionForm");
-    selectionForm.addEventListener("submit", function (event) {
-      // Prevent the form from actually submitting to a server
-      event.preventDefault();
+    function getUserSelectedWork() {
+      return new Promise((resolve) => {
+        const selectionForm = document.getElementById("selectionForm");
+        let chosenOptions;
+        selectionForm.addEventListener("submit", function (event) {
+          event.preventDefault();
+          chosenOptions = determineSelection();
+          resolve(chosenOptions);
+        });
+      });
+    }
 
-      let chosenOptions = determineSelection();
-      let prices = iterateSelection(chosenOptions);
-      console.log(prices);
-      //renderPrices(prices);
+    // Use async/await to wait for the promise to resolve
+    async function main() {
+      let workComponent = await getUserSelectedWork();
+      console.log(workComponent);
+    }
 
-      //Createa function that accepts the prices and mails us the info we need.
-    });
-
+    main(); // Call the main function to start the process
+    //Create a function that accepts the prices and mails us the info we need.
   </script>
 </html>
